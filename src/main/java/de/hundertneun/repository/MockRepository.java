@@ -70,20 +70,20 @@ public class MockRepository implements Repository {
 
     private List<Show> createDates(int offset) {
         return Arrays.asList(
-                new Show(LocalDateTime.of(2016, 4, 4, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
-                new Show(LocalDateTime.of(2016, 4, 4, 20, 0).plusMinutes(offset), BigDecimal.valueOf(7.00), createRoom()),
+                new Show(LocalDateTime.of(2016, 4, 4, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
+                new Show(LocalDateTime.of(2016, 4, 4, 20, 0).plusMinutes(offset), BigDecimal.valueOf(7.00), "Saal 1"),
 
-                new Show(LocalDateTime.of(2016, 4, 5, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
-                new Show(LocalDateTime.of(2016, 4, 5, 20, 0).plusMinutes(offset), BigDecimal.valueOf(8.00), createRoom()),
-                new Show(LocalDateTime.of(2016, 4, 6, 17, 15).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
-                new Show(LocalDateTime.of(2016, 4, 6, 21, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
-                new Show(LocalDateTime.of(2016, 4, 6, 23, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
+                new Show(LocalDateTime.of(2016, 4, 5, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
+                new Show(LocalDateTime.of(2016, 4, 5, 20, 0).plusMinutes(offset), BigDecimal.valueOf(8.00), "Saal 1"),
+                new Show(LocalDateTime.of(2016, 4, 6, 17, 15).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
+                new Show(LocalDateTime.of(2016, 4, 6, 21, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
+                new Show(LocalDateTime.of(2016, 4, 6, 23, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
 
-                new Show(LocalDateTime.of(2016, 4, 7, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
-                new Show(LocalDateTime.of(2016, 4, 7, 20, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
+                new Show(LocalDateTime.of(2016, 4, 7, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
+                new Show(LocalDateTime.of(2016, 4, 7, 20, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
 
-                new Show(LocalDateTime.of(2016, 4, 8, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom()),
-                new Show(LocalDateTime.of(2016, 4, 8, 20, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), createRoom())
+                new Show(LocalDateTime.of(2016, 4, 8, 17, 30).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1"),
+                new Show(LocalDateTime.of(2016, 4, 8, 20, 0).plusMinutes(offset), BigDecimal.valueOf(7.50), "Saal 1")
         );
     }
 

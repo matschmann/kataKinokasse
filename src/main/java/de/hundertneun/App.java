@@ -9,13 +9,16 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
+import java.time.LocalDateTime;
 
 public class App {
 
     private static final Logger logger = LogManager.getLogger(App.class);
     public static final int DEFAUL_PORT = 8081;
 
-
+    public static final LocalDateTime CURRENT_DATE_TIME = LocalDateTime.of(2016, 6, 6, 0, 0);     
+    
+    
     public static void main(String[] args) {
         
         int port = getPortNumber(args);

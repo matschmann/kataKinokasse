@@ -13,12 +13,12 @@ public class Show {
     
     private BigDecimal price; 
     
-    private Room room;
+    private String room;
 
     public Show() {
     }
 
-    public Show(LocalDateTime dateTime, BigDecimal price, Room room) {
+    public Show(LocalDateTime dateTime, BigDecimal price, String room) {
         this.dateTime = dateTime;
         this.price = price;
         this.room = room;
@@ -40,11 +40,41 @@ public class Show {
         this.price = price;
     }
 
-    public Room getRoom() {
+    public String getRoom() {
         return room;
     }
 
-    public void setRoom(Room room) {
+    public void setRoom(String room) {
         this.room = room;
+    }
+
+    @Override
+    public String toString() {
+        return "Show{" +
+                "dateTime=" + dateTime +
+                ", price=" + price +
+                ", room='" + room + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Show show = (Show) o;
+
+        return dateTime != null ? dateTime.equals(show.dateTime) : show.dateTime == null &&
+                price != null ? price.compareTo(show.price) == 0 : show.price == null &&
+                room != null ? room.equals(show.room) : show.room == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = dateTime != null ? dateTime.hashCode() : 0;
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (room != null ? room.hashCode() : 0);
+        return result;
     }
 }
