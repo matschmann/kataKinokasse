@@ -26,11 +26,11 @@ public class FileRepository implements Repository {
 
         String line;
         while ((line = in.readLine()) != null) {
-            String[] split1 = line.split(";");
-            String movieTitle = split1[0];
+            String[] split = line.split(";");
+            String movieTitle = split[0];
             movies.add(new Movie(movieTitle));
 
-            readShows(split1[1]);
+            readShows(split[1]);
         }
     }
 

@@ -8,12 +8,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 public class FileRepositoryTest {
@@ -21,9 +15,9 @@ public class FileRepositoryTest {
     @Test
     public void listMovies() throws Exception {
         FileRepository repo = new FileRepository(new ByteArrayInputStream((
-                "Film1;blabla...\n" +
-                        "Film2;blablabal....\n" +
-                        "Film3;vlvlvlv").getBytes()
+                "Film1;Mo/17:00/Saal 1/8.00\n" +
+                        "Film2;Mo/17:00/Saal 1/8.00\n" +
+                        "Film3;Mo/17:00/Saal 1/8.00").getBytes()
         ));
 
         List<Movie> movies = repo.listMovies();
