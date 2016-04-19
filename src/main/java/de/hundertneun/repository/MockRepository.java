@@ -10,43 +10,54 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 public class MockRepository implements Repository {
 
-    public static final String TITLE1 = "Der Stadtneurotiker";
-    public static final String TITLE2 = "Alice";
-    public static final String TITLE3 = "Hollywood Ending";
-    public static final String TITLE4 = "Harry außer sich";
-    
-    private final Map<String, Movie> movies;
+    public static final Movie MOVIE1 = new Movie("Der Stadtneurotiker");
+    public static final Movie MOVIE2 = new Movie("Alice");
+    public static final Movie MOVIE3 = new Movie("Hollywood Ending");
+    public static final Movie MOVIE4 = new Movie("Harry außer sich");
+
+    private final List<Movie> movies;
 
     public MockRepository() {
-        movies = new HashMap<>();
-        movies.put(TITLE1, new Movie(TITLE1));
-        movies.put(TITLE2, new Movie(TITLE2));
-        movies.put(TITLE3, new Movie(TITLE3));
-        movies.put(TITLE4, new Movie(TITLE4));
+        movies = new ArrayList<>();
+        movies.add(MOVIE1);
+        movies.add(MOVIE2);
+        movies.add(MOVIE3);
+        movies.add(MOVIE4);
     }
 
 
     @Override
     public List<Movie> listMovies() {
-        return new ArrayList<>(movies.values());
+        return movies;
     }
 
     @Override
-    public List<Show> listShows(Movie movie) {
-        switch (movie.getTitle()) {
-            case TITLE1:
+    public List<Show> listShowsByMovie(UUID movieId) {
+
+        boolean found = false; 
+        for (Movie movie : movies) {    //TODO Java8 syntax
+            if (movie.getId().equals(movieId)) {
+                found = true; 
+            }
+        }
+
+        if (!found) {
+            return Collections.emptyList();
+        }
+        
+        switch ((int) (movieId.getMostSignificantBits() % 4)) {
+            case 0:
                 return createDates(0);
-            case TITLE2:
+            case 1:
                 return createDates(-15);
-            case TITLE3:
+            case 2:
                 return createDates(30);
-            case TITLE4:
+            case 3:
                 return createDates(-30);
             default:
                 return Collections.emptyList();

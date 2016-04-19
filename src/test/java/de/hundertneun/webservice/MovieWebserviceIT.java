@@ -16,16 +16,16 @@ public class MovieWebserviceIT extends BaseIT {
         
         //check if all titles exit
         assertThat(jsonRespone).contains(
-                MockRepository.TITLE1,
-                MockRepository.TITLE2,
-                MockRepository.TITLE3,
-                MockRepository.TITLE4
+                MockRepository.MOVIE1.getTitle(),
+                MockRepository.MOVIE2.getTitle(),
+                MockRepository.MOVIE3.getTitle(),
+                MockRepository.MOVIE4.getTitle()
         );
     }
 
     @Test
     public void shows_validMovieName_returnsAllMovieShows() throws Exception {
-        String jsonRespone = requestForPath("shows/" + MockRepository.TITLE4);
+        String jsonRespone = requestForPath("shows/" + MockRepository.MOVIE4.getTitle());
         
         //check if result contains at leat one date in the correct format
         assertThat(jsonRespone).matches(".*\"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}\".*");

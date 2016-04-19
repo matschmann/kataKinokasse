@@ -5,6 +5,7 @@ import de.hundertneun.webservice.LocalDateTimeAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Show {
 
@@ -14,6 +15,8 @@ public class Show {
     private BigDecimal price; 
     
     private String room;
+    private UUID id;
+    private Movie movie;
 
     public Show() {
     }
@@ -76,5 +79,21 @@ public class Show {
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (room != null ? room.hashCode() : 0);
         return result;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Movie getMovie() {
+        return movie;
     }
 }

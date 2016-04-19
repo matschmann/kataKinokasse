@@ -12,14 +12,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class FileRepository implements Repository {
 
-    private final List<Show> shows = new ArrayList<>();
-    private List<Movie> movies = new ArrayList<>();
+    private final Map<UUID, Show> shows = new HashMap<>();
+    private final List<Movie> movies = new ArrayList<>();
     
     public FileRepository(InputStream is) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
@@ -27,36 +31,39 @@ public class FileRepository implements Repository {
         String line;
         while ((line = in.readLine()) != null) {
             String[] split = line.split(";");
-            String movieTitle = split[0];
-            movies.add(new Movie(movieTitle));
-
-            readShows(split[1]);
+            Movie movie = readMovie(split[0]);
+            readShows(split[1], movie);
         }
     }
 
-    private void readShows(String showList) {
+    private Movie readMovie(String movieTitle) {
+        Movie movie = new Movie(movieTitle);
+        movies.add(movie);
+        return movie; 
+    }
+
+    private void readShows(String showList, Movie movie) {
         //showList is a string like 
         //   Mo/17:00/Saal 1/7.00,Mo/20:00/Saal 1/8.00,...
         
         for (String singleShow : showList.split(",")) {
             String[] split = singleShow.split("/");
 
-            String day = split[0];
-            String time = split[1];
-            String room = split[2];
-            String price = split[3];
+            Show show = new Show();
+            show.setId(UUID.randomUUID());
+            show.setDateTime(getDateTime(split[0], split[1]));
+            show.setRoom(split[2]);
+            show.setPrice(new BigDecimal(split[3]));
+            show.setMovie(movie);
 
-            Show ding = new Show();
-            ding.setPrice(new BigDecimal(price));
-            ding.setRoom(room);
-
-            LocalDate dateOfShow = DateUtil.nextDayOfWeek(DateUtil.parseDay(day), App.CURRENT_DATE_TIME.toLocalDate());
-            LocalTime timeOfShow = DateUtil.parseTime(time);
-            
-            ding.setDateTime(dateOfShow.atTime(timeOfShow));
-
-            this.shows.add(ding);
+            this.shows.put(show.getId(), show);
         }
+    }
+
+    private LocalDateTime getDateTime(String day, String time) {
+        LocalDate dateOfShow = DateUtil.nextDayOfWeek(DateUtil.parseDay(day), App.CURRENT_DATE_TIME.toLocalDate());
+        LocalTime timeOfShow = DateUtil.parseTime(time);
+        return dateOfShow.atTime(timeOfShow);
     }
 
     @Override
@@ -65,12 +72,19 @@ public class FileRepository implements Repository {
     }
 
     @Override
-    public List<Show> listShows(Movie movie) {
-        return shows;
+    public List<Show> listShowsByMovie(UUID movieId) {
+        List<Show> showsByMovie = new ArrayList<>();
+        for (Show show : shows.values()) { //TODO java8
+            if (show.getMovie().getId().equals(movieId)) {
+                showsByMovie.add(show);
+            }
+        }
+        return showsByMovie;
     }
 
     @Override
     public boolean reserveSeat(Show show, int seatNumber) {
+        
         return false;
     }
 

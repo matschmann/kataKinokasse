@@ -35,12 +35,12 @@ public class FileRepositoryTest {
     }
 
     @Test
-    public void testName() throws Exception {
+    public void listShowsByMovie() throws Exception {
         FileRepository repository = new FileRepository(new ByteArrayInputStream(
                 "Film1;Mo/17:00/Saal 1/7.00,Mo/20:00/Saal 1/8.00".getBytes()
         ));
 
-        List<Show> film1 = repository.listShows(new Movie("Film1"));
+        List<Show> film1 = repository.listShowsByMovie(new Movie("Film1").getId());
 
         assertThat(film1).hasSize(2);
         assertThat(film1).containsExactlyInAnyOrder(

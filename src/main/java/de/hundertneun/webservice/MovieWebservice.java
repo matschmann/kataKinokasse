@@ -32,7 +32,7 @@ public class MovieWebservice {
     @Path("/shows/{movieTitle}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Show> showsForMovie(@PathParam("movieTitle") String movieTitle) {
-        List<Show> shows = repository.listShows(new Movie(movieTitle));
+        List<Show> shows = repository.listShowsByMovie(new Movie(movieTitle).getId());
 
         if (shows.isEmpty()) {
             throw new WebApplicationException(404);

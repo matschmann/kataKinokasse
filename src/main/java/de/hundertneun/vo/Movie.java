@@ -1,19 +1,17 @@
 package de.hundertneun.vo;
 
-import de.hundertneun.webservice.LocalDateTimeAdapter;
-
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.UUID;
 
 public class Movie {
     private String title;
-    
-    public Movie() {
-    }
+    private UUID uuid;
 
     public Movie(String title) {
+        assert title != null;
+        
         this.title = title;
+
+        uuid = UUID.nameUUIDFromBytes(title.getBytes());
     }
 
     public String getTitle() {
@@ -22,5 +20,10 @@ public class Movie {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    public UUID getId() {
+
+        return uuid;
     }
 }
