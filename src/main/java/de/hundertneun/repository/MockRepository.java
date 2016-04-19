@@ -65,17 +65,17 @@ public class MockRepository implements Repository {
     }
 
     @Override
-    public boolean reserveSeat(Show show, int seatNumber) {
+    public boolean reserveSeat(UUID showId, int seatNumber) {
         return false;
     }
 
     @Override
-    public boolean isSeatAvailable(Show show, int seatNumber) {
+    public boolean isSeatAvailable(UUID showId, int seatNumber) {
         return false;
     }
 
     @Override
-    public List<Seat> listAvaliableSeats(Show show) {
+    public List<Seat> listAvaliableSeats(UUID showId) {
         return null;
     }
 

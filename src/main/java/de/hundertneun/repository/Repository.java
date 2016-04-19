@@ -13,10 +13,10 @@ public interface Repository {
 
     List<Show> listShowsByMovie(UUID movieId);
     
-    boolean reserveSeat(Show show, int seatNumber);
+    boolean reserveSeat(UUID showId, int seatNumber);
     
-    boolean isSeatAvailable(Show show, int seatNumber);
+    boolean isSeatAvailable(UUID showId, int seatNumber);
     
-    List<Seat> listAvaliableSeats(Show show); 
+    List<Seat> listAvaliableSeats(UUID showId); 
     
 }

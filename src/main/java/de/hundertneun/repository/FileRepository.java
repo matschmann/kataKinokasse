@@ -16,14 +16,15 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class FileRepository implements Repository {
 
     private final Map<UUID, Show> shows = new HashMap<>();
-    private final List<Movie> movies = new ArrayList<>();
     
     public FileRepository(InputStream is) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
@@ -31,18 +32,11 @@ public class FileRepository implements Repository {
         String line;
         while ((line = in.readLine()) != null) {
             String[] split = line.split(";");
-            Movie movie = readMovie(split[0]);
-            readShows(split[1], movie);
+            readShows(new Movie(split[0]), split[1]);
         }
     }
 
-    private Movie readMovie(String movieTitle) {
-        Movie movie = new Movie(movieTitle);
-        movies.add(movie);
-        return movie; 
-    }
-
-    private void readShows(String showList, Movie movie) {
+    private void readShows(Movie movie, String showList) {
         //showList is a string like 
         //   Mo/17:00/Saal 1/7.00,Mo/20:00/Saal 1/8.00,...
         
@@ -68,7 +62,11 @@ public class FileRepository implements Repository {
 
     @Override
     public List<Movie> listMovies() {
-        return movies;
+        Set<Movie> movies = new HashSet<>();
+        for (Show show : shows.values()) {
+            movies.add(show.getMovie());
+        }
+        return new ArrayList<>(movies);
     }
 
     @Override
@@ -83,18 +81,19 @@ public class FileRepository implements Repository {
     }
 
     @Override
-    public boolean reserveSeat(Show show, int seatNumber) {
-        
+    public boolean reserveSeat(UUID showId, int seatNumber) {
+        Show show = shows.get(showId);
+        show.getRoom();
         return false;
     }
 
     @Override
-    public boolean isSeatAvailable(Show show, int seatNumber) {
+    public boolean isSeatAvailable(UUID showId, int seatNumber) {
         return false;
     }
 
     @Override
-    public List<Seat> listAvaliableSeats(Show show) {
+    public List<Seat> listAvaliableSeats(UUID showId) {
         return null;
     }
 }
