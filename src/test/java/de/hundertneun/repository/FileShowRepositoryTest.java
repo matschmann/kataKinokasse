@@ -10,11 +10,11 @@ import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class FileRepositoryTest {
+public class FileShowRepositoryTest {
 
     @Test
     public void listMovies() throws Exception {
-        FileRepository repo = new FileRepository(new ByteArrayInputStream((
+        FileShowRepository repo = new FileShowRepository(new ByteArrayInputStream((
                 "Film1;Mo/17:00/Saal 1/8.00\n" +
                         "Film2;Mo/17:00/Saal 1/8.00\n" +
                         "Film3;Mo/17:00/Saal 1/8.00").getBytes()
@@ -27,7 +27,7 @@ public class FileRepositoryTest {
 
     @Test
     public void listMovies_emptyInptStream() throws Exception {
-        FileRepository repo = new FileRepository(new ByteArrayInputStream(("").getBytes()));
+        FileShowRepository repo = new FileShowRepository(new ByteArrayInputStream(("").getBytes()));
 
         List<Movie> movies = repo.listMovies();
 
@@ -36,7 +36,7 @@ public class FileRepositoryTest {
 
     @Test
     public void listShowsByMovie() throws Exception {
-        FileRepository repository = new FileRepository(new ByteArrayInputStream(
+        FileShowRepository repository = new FileShowRepository(new ByteArrayInputStream(
                 "Film1;Mo/17:00/Saal 1/7.00,Mo/20:00/Saal 1/8.00".getBytes()
         ));
 

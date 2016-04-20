@@ -9,13 +9,10 @@ public class Room {
     
     private String name;
 
-    public Room() {
-    }
-
     public Room(String name, String seatsAsString) {
         assert name != null;
         assert seatsAsString != null;
-        assert seatsAsString.length() > 0;
+        assert seatsAsString.length() > 0 : "the room '" + name + "' has no seats.";
         
         this.name = name; 
         
@@ -34,7 +31,7 @@ public class Room {
         return seats.size();
     }
 
-    public Seat getByNumber(int seatNumber) {
+    public Seat getSeatByNumber(int seatNumber) {
         if (seatNumber <= 0 || seatNumber > seats.size()) {
             throw new IllegalArgumentException("Seat " + seatNumber + " does not exist. Largest seat number is " + seats.size());
         }

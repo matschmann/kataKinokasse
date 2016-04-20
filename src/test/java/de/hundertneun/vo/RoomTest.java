@@ -8,28 +8,28 @@ public class RoomTest {
 
     @Test
     public void getTotalNumberOfSeats() throws Exception {
-        assertThat(seatingPlan().getTotalNumberOfSeats()).isEqualTo(112);
+        assertThat(createRoom().getTotalNumberOfSeats()).isEqualTo(112);
     } 
     
     @Test
     public void getByNumber_exists() throws Exception {
-        assertThat(seatingPlan().getByNumber(12)).isNotNull();
-        assertThat(seatingPlan().getByNumber(112)).isNotNull();
+        assertThat(createRoom().getSeatByNumber(12)).isNotNull();
+        assertThat(createRoom().getSeatByNumber(112)).isNotNull();
     } 
     
     @Test
     public void getByNumber_tooSmall_throwsIllegalArgumentException() throws Exception {
-        assertThatThrownBy(() -> seatingPlan().getByNumber(0)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> createRoom().getSeatByNumber(0)).isInstanceOf(IllegalArgumentException.class);
 
     } 
     
     @Test
     public void getByNumber_tooLarge_throwsIllegalArgumentException() throws Exception {
-        assertThatThrownBy(() -> seatingPlan().getByNumber(113)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> createRoom().getSeatByNumber(113)).isInstanceOf(IllegalArgumentException.class);
 
     }
 
-    private Room seatingPlan() {
+    private Room createRoom() {
         return new Room("Helia 1", 
                             "    XXXXXXXXXXXXX    \n" + 
                             "  XXXXXXXXXXXXXXXXX  \n" + 

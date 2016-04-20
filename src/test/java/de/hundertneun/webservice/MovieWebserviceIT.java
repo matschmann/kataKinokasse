@@ -1,6 +1,6 @@
 package de.hundertneun.webservice;
 
-import de.hundertneun.repository.MockRepository;
+import de.hundertneun.repository.MockShowRepository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.Test;
@@ -16,16 +16,16 @@ public class MovieWebserviceIT extends BaseIT {
         
         //check if all titles exit
         assertThat(jsonRespone).contains(
-                MockRepository.MOVIE1.getTitle(),
-                MockRepository.MOVIE2.getTitle(),
-                MockRepository.MOVIE3.getTitle(),
-                MockRepository.MOVIE4.getTitle()
+                MockShowRepository.MOVIE1.getTitle(),
+                MockShowRepository.MOVIE2.getTitle(),
+                MockShowRepository.MOVIE3.getTitle(),
+                MockShowRepository.MOVIE4.getTitle()
         );
     }
 
     @Test
     public void shows_validMovieName_returnsAllMovieShows() throws Exception {
-        String jsonRespone = requestForPath("shows/" + MockRepository.MOVIE4.getTitle());
+        String jsonRespone = requestForPath("shows/" + MockShowRepository.MOVIE4.getTitle());
         
         //check if result contains at leat one date in the correct format
         assertThat(jsonRespone).matches(".*\"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}\".*");

@@ -7,7 +7,7 @@ import de.hundertneun.vo.Show;
 import java.util.List;
 import java.util.UUID;
 
-public interface Repository {
+public interface ShowRepository {
 
     List<Movie> listMovies();
 

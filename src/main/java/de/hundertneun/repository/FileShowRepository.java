@@ -22,11 +22,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class FileRepository implements Repository {
+public class FileShowRepository implements ShowRepository {
 
     private final Map<UUID, Show> shows = new HashMap<>();
     
-    public FileRepository(InputStream is) throws IOException {
+    public FileShowRepository(InputStream is) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
 
         String line;

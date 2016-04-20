@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class MockRepository implements Repository {
+public class MockShowRepository implements ShowRepository {
 
     public static final Movie MOVIE1 = new Movie("Der Stadtneurotiker");
     public static final Movie MOVIE2 = new Movie("Alice");
@@ -22,7 +22,7 @@ public class MockRepository implements Repository {
 
     private final List<Movie> movies;
 
-    public MockRepository() {
+    public MockShowRepository() {
         movies = new ArrayList<>();
         movies.add(MOVIE1);
         movies.add(MOVIE2);

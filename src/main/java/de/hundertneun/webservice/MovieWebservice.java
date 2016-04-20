@@ -1,7 +1,7 @@
 package de.hundertneun.webservice;
 
-import de.hundertneun.repository.Repository;
-import de.hundertneun.repository.MockRepository;
+import de.hundertneun.repository.ShowRepository;
+import de.hundertneun.repository.MockShowRepository;
 import de.hundertneun.vo.Movie;
 import de.hundertneun.vo.Show;
 
@@ -16,23 +16,23 @@ import java.util.List;
 @Path("/")
 public class MovieWebservice {
 
-    Repository repository;
+    ShowRepository showRepository;
 
     public MovieWebservice() {
-        repository = new MockRepository();
+        showRepository = new MockShowRepository();
     }
 
     @GET @Path("/movies")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Movie> allMovies(){
-        return repository.listMovies();
+        return showRepository.listMovies();
     }
 
     @GET
     @Path("/shows/{movieTitle}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Show> showsForMovie(@PathParam("movieTitle") String movieTitle) {
-        List<Show> shows = repository.listShowsByMovie(new Movie(movieTitle).getId());
+        List<Show> shows = showRepository.listShowsByMovie(new Movie(movieTitle).getId());
 
         if (shows.isEmpty()) {
             throw new WebApplicationException(404);
