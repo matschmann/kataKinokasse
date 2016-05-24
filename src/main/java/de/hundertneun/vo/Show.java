@@ -14,17 +14,17 @@ public class Show {
     
     private BigDecimal price; 
     
-    private String room;
+    private String roomName;
     private UUID id;
     private Movie movie;
 
     public Show() {
     }
 
-    public Show(LocalDateTime dateTime, BigDecimal price, String room) {
+    public Show(LocalDateTime dateTime, BigDecimal price, String roomName) {
         this.dateTime = dateTime;
         this.price = price;
-        this.room = room;
+        this.roomName = roomName;
     }
 
     public LocalDateTime getDateTime() {
@@ -43,12 +43,12 @@ public class Show {
         this.price = price;
     }
 
-    public String getRoom() {
-        return room;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Show {
         return "Show{" +
                 "dateTime=" + dateTime +
                 ", price=" + price +
-                ", room='" + room + '\'' +
+                ", roomName='" + roomName + '\'' +
                 '}';
     }
 
@@ -69,7 +69,7 @@ public class Show {
 
         return dateTime != null ? dateTime.equals(show.dateTime) : show.dateTime == null &&
                 price != null ? price.compareTo(show.price) == 0 : show.price == null &&
-                room != null ? room.equals(show.room) : show.room == null;
+                roomName != null ? roomName.equals(show.roomName) : show.roomName == null;
 
     }
 
@@ -77,7 +77,7 @@ public class Show {
     public int hashCode() {
         int result = dateTime != null ? dateTime.hashCode() : 0;
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (room != null ? room.hashCode() : 0);
+        result = 31 * result + (roomName != null ? roomName.hashCode() : 0);
         return result;
     }
 

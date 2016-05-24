@@ -1,19 +1,16 @@
 package de.hundertneun.webservice;
 
-import de.hundertneun.repository.ShowRepository;
 import de.hundertneun.repository.MockShowRepository;
+import de.hundertneun.repository.ShowRepository;
 import de.hundertneun.vo.Movie;
 import de.hundertneun.vo.Show;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/")
+@RestController
 public class MovieWebservice {
 
     ShowRepository showRepository;
@@ -22,20 +19,17 @@ public class MovieWebservice {
         showRepository = new MockShowRepository();
     }
 
-    @GET @Path("/movies")
-    @Produces(MediaType.APPLICATION_JSON)
+    @RequestMapping("/movies")
     public List<Movie> allMovies(){
         return showRepository.listMovies();
     }
 
-    @GET
-    @Path("/shows/{movieTitle}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Show> showsForMovie(@PathParam("movieTitle") String movieTitle) {
+    @RequestMapping("/shows")
+    public List<Show> showsForMovie(@RequestParam(value="movieTitle")  String movieTitle) {
         List<Show> shows = showRepository.listShowsByMovie(new Movie(movieTitle).getId());
 
         if (shows.isEmpty()) {
-            throw new WebApplicationException(404);
+            throw new RuntimeException("404");
         }
         
         return shows;

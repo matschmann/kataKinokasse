@@ -1,8 +1,8 @@
 package de.hundertneun.repository;
 
-import de.hundertneun.App;
 import de.hundertneun.util.DateUtil;
 import de.hundertneun.vo.Movie;
+import de.hundertneun.vo.Room;
 import de.hundertneun.vo.Seat;
 import de.hundertneun.vo.Show;
 
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -19,12 +20,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 public class FileShowRepository implements ShowRepository {
 
     private final Map<UUID, Show> shows = new HashMap<>();
+    private RoomRepository roomRepository = new FileRoomRepository(Paths.get("data/rooms"));
     
     public FileShowRepository(InputStream is) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
@@ -46,7 +49,7 @@ public class FileShowRepository implements ShowRepository {
             Show show = new Show();
             show.setId(UUID.randomUUID());
             show.setDateTime(getDateTime(split[0], split[1]));
-            show.setRoom(split[2]);
+            show.setRoomName(split[2]);
             show.setPrice(new BigDecimal(split[3]));
             show.setMovie(movie);
 
@@ -55,7 +58,7 @@ public class FileShowRepository implements ShowRepository {
     }
 
     private LocalDateTime getDateTime(String day, String time) {
-        LocalDate dateOfShow = DateUtil.nextDayOfWeek(DateUtil.parseDay(day), App.CURRENT_DATE_TIME.toLocalDate());
+        LocalDate dateOfShow = DateUtil.nextDayOfWeek(DateUtil.parseDay(day), LocalDate.now());
         LocalTime timeOfShow = DateUtil.parseTime(time);
         return dateOfShow.atTime(timeOfShow);
     }
@@ -82,18 +85,34 @@ public class FileShowRepository implements ShowRepository {
 
     @Override
     public boolean reserveSeat(UUID showId, int seatNumber) {
-        Show show = shows.get(showId);
-        show.getRoom();
-        return false;
+        Optional<Room> roomByName = getRoom(showId);
+
+        Seat seat = roomByName.get().getSeatByNumber(seatNumber);
+        seat.setTaken(true);
+        return !seat.isTaken();
     }
 
     @Override
     public boolean isSeatAvailable(UUID showId, int seatNumber) {
-        return false;
+        return getRoom(showId).get().getSeatByNumber(seatNumber).isTaken();
     }
 
     @Override
     public List<Seat> listAvaliableSeats(UUID showId) {
-        return null;
+        List<Seat> availableSeats = new ArrayList<>();
+        
+        Optional<Room> room = getRoom(showId);
+        List<Seat> seats = room.get().getSeats();
+        for (Seat seat : seats) {
+            if (!seat.isTaken()) {
+                availableSeats.add(seat);
+            }
+        }
+        return availableSeats;
+    }
+
+    private Optional<Room> getRoom(UUID showId) {
+        Show show = shows.get(showId);
+        return roomRepository.getRoomByName(show.getRoomName());
     }
 }
